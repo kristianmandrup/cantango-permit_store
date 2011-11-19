@@ -29,6 +29,11 @@ class CanTango::PermitStore
 end
 ```
 
+The stores included are:
+
+* `YamlPermitStore`
+* `MonetaPermitStore`
+
 ## Install 'permit_store_' gem
 
 ### In current environment (or gemset)
@@ -49,6 +54,7 @@ Run bundler in a terminal/console from the folder of your Gemfile (root folder o
 
 ```ruby
 require 'cantango/permit_store'
+require 'cantango/permit_store_engine'
 ```
 
 ## Update Nov 19, 2011
