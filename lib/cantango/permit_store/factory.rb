@@ -1,5 +1,5 @@
 module CanTango
-  class PermissionEngine < Engine
+  class PermitStore
     class Factory
       include CanTango::Helpers::Debug
 

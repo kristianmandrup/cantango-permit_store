@@ -1,7 +1,7 @@
 require 'yaml'
 
 module CanTango
-  class YamlStorePermitStore < PermitStore
+  class YamlPermitStore < PermitStore
     attr_reader :path, :last_load_time
 
     # for a YamlStore, the name is the name of the yml file

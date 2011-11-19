@@ -1,5 +1,5 @@
 module CanTango
-  class PermissionEngine < Engine
+  class PermitStore
     class Statements
       attr_reader :method, :action
 

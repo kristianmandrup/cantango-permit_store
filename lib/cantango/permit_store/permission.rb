@@ -1,6 +1,6 @@
 module CanTango
-  class PermissionEngine < Engine
-    class Permission
+  class PermitStore
+    class Permit
       # rules is a Hashie, a Hash where keys can also be accessed as method calls
       attr_accessor :name, :static_rules, :compiled_rules
 
@@ -33,7 +33,7 @@ module CanTango
       end
 
       def compiler
-        @compiler ||= CanTango::PermissionEngine::Compiler.new
+        @compiler ||= CanTango::PermitStore::Compiler.new
       end
     end
   end

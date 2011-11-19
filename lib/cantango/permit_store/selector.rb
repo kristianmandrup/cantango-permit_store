@@ -1,5 +1,5 @@
 module CanTango
-  class PermissionEngine < Engine
+  class PermitStore
     module Selector
       autoload_modules :Base, :Licenses, :Roles, :RoleGroups, :Users, :UserTypes, :AccountTypes
 

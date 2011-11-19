@@ -2,7 +2,7 @@ require 'moneta'
 require 'active_support/inflector'
 
 module CanTango
-  class MonetaStore < PermitStore
+  class MonetaPermitStore < PermitStore
     # one cache store is shared for all store instances (w different names)
     attr_reader :store
 

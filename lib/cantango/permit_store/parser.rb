@@ -1,5 +1,5 @@
 module CanTango
-  class PermissionEngine < Engine
+  class PermitStore
     module Parser
       autoload_modules :Categories, :Permissions
       autoload_modules :Category, :Default, :Ownership, :Relationship, :Regex, :Rule

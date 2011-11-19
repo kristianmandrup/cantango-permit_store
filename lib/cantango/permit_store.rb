@@ -1,6 +1,6 @@
-require 'set'
-
 module CanTango
+  autoload_modules :YamlPermitStore, :MonetaPermitStore
+  
   class PermitStore
     autoload_modules :Collector, :Compiler, :Evaluator, :Selector
     autoload_modules :Factory, :Loader, :Parser, :Permission
