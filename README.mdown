@@ -1,3 +1,51 @@
-= PermitStore
+# Permit Store
 
-This project rocks and uses MIT-LICENSE.
+[CanTango](https://github.com/kristianmandrup/cantango) is an advanced Access Control (permissions) system for Rails 3. It:
+
+* extends [CanCan](http://github.com/ryanb/cancan) and offers a more role oriented design
+* integrates with _role_ and _authentication_ systems in a non-intrusive manner
+* can _cache_ ability rules between requests for increased performance
+* can _store_ abilites in a permission store, including a YAML file, for easy administration
+* works well with multiple user accounts and sub applications
+* supports multiple [Devise](https://github.com/plataformatec/devise) users
+
+*CanTango Store* includes:
+
+* The generic Permit Store API and functionality
+* Permit store engine implementation
+* Permit store implementations for: 
+  * YAML file
+  * Moneta store
+
+## Permit Store API
+
+````ruby
+class CanTango::PermitStore
+  def load!
+  end
+
+  def save! permissions
+  end
+end
+```
+
+## Install 'permit_store_' gem
+
+### In current environment (or gemset)
+
+`gem install permit_store`
+
+### In application
+
+Insert into Gemfile
+
+`gem 'permit_store'`
+
+Run bundler in a terminal/console from the folder of your Gemfile (root folder of app)
+
+`$ bundle`
+
+## Update Nov 19, 2011
+
+Initial extraction of permit_store related functionality. Needs refactoring and testing!
+Currently not working. Any help appreciated ;)
