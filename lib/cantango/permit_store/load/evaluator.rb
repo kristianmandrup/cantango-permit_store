@@ -4,7 +4,7 @@ module CanTango::PermitStore::Load
 
     attr_reader :ability, :rule
 
-    include CanTango::Rules
+    # include CanTango::Ability::Dsl::Rules
 
     def initialize ability, rule
       @ability = ability

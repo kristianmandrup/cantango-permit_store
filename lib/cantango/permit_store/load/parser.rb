@@ -1,7 +1,6 @@
 module CanTango::PermitStore::Load
   module Parser
-    autoload_modules :Categories, :Permissions
-    autoload_modules :Category, :Default, :Ownership, :Relationship, :Regex, :Rule
+    sweetload :Permissions, :Rule, :Category, :Default, :Ownership, :Relationship, :Regex
 
     def self.create_for method, action, target
       type = parser_type target

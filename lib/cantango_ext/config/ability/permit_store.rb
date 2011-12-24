@@ -1,6 +1,6 @@
 module CanTango
   class Config
-    module Ability
+    class Ability
       class PermitStore < Engine
         def modes
           @modes ||= [:cache]

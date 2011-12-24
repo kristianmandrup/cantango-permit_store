@@ -36,8 +36,8 @@ module CanTango
       def parser
         @parser ||= CanTango::PermissionEngine::Parser::Permissions.new
       end
-
-      CanTango.config.permission_engine.types.each do |type|
+=begin
+      CanTango.config.engine(:permit_store).types.each do |type|
         define_method(:"#{type}_permissions") {
           permissions.send(:"#{type}")
         }
@@ -54,6 +54,7 @@ module CanTango
           Hashie::Mash.new(compiled_sum)
         end
       end
+=end
     end
   end
 end

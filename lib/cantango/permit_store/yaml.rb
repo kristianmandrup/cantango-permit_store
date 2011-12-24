@@ -37,7 +37,8 @@ module CanTango
         File.mtime(file_path)
       end
 
-      CanTango.config.permission_engine.types.each do |type|
+=begin
+      CanTango.config.engine(:permit_store).types.each do |type|
         define_method(:"#{type}_permissions") do
           loader.send(:"#{type}_permissions") || {}
         end
@@ -60,7 +61,7 @@ module CanTango
 
         alias_method :"#{type}_rules", :"#{type}_compiled_permissions"
       end
-
+=end
       def save! perms = nil
         save_permissions(perms) if perms
 

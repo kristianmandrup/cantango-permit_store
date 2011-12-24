@@ -1,5 +1,5 @@
 module CanTango
-  module Config
+  class Config
     class PermitStore < Engine
       include CanTango::Config::Factory
 

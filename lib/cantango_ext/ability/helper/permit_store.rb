@@ -1,5 +1,5 @@
 module CanTango
-  class Ability
+  module Ability
     module Helper
       module PermitStore
         def permissions?
