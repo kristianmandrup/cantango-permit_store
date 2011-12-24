@@ -1,8 +1,8 @@
 require 'rspec'
 require 'cantango'
 
-describe CanTango::PermissionEngine::Store do
-  let(:store) { CanTango::PermissionEngine::Store }
+describe CanTango::PermitStore::Store do
+  let(:store) { CanTango::PermitStore::Store }
   let (:permission_store) { CanTango.permission_store}
 end
 

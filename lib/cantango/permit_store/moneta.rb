@@ -5,13 +5,15 @@ module CanTango
   module PermitStore
     class Moneta < Base
       # one cache store is shared for all store instances (w different names)
-      attr_reader :store
 
       # for a YamlStore, the name is the name of the yml file
       def initialize name, options = {}
-        super
-        @store = CanTango::Cache::MonetaCache.instance
-        @store.configure_with options
+        super        
+        store.configure_with options
+      end
+
+      def store
+        CanTango::Cache::MonetaCache.instance
       end
 
       def self.create name, options = {}

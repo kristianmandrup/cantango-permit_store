@@ -13,7 +13,7 @@ module CanTango::PermitStore::Load
 
     def build
       relevant_rules.inject([]){|evaluators, (name, rules)|
-        evaluators << CanTango::PermissionEngine::Evaluator.new(ability, rules) 
+        evaluators << CanTango::PermitStore::Evaluator.new(ability, rules) 
       }
     end
 
@@ -22,7 +22,7 @@ module CanTango::PermitStore::Load
     end
 
     def selector
-      CanTango::PermissionEngine::Selector.create type, self
+      CanTango::PermitStore::Selector.create type, self
     end
 
     def role_groups_list

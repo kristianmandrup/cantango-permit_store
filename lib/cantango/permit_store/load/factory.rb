@@ -21,7 +21,7 @@ module CanTango::PermitStore::Load
 
     def collector(type)
       rules = store.send(:"#{type}_rules")
-      CanTango::PermissionEngine::Collector.new(ability, rules, type)
+      CanTango::PermitStore::Collector.new(ability, rules, type)
     end
 
     def options

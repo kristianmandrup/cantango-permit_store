@@ -6,7 +6,7 @@ module CanTango::PermitStore::Load
       end
 
       def parse(key, obj, &blk)
-        permission = CanTango::PermissionEngine::Permission.new key
+        permission = CanTango::PermitStore::Permission.new key
         case obj
         when Hash
           parse_permission(obj, permission, &blk)

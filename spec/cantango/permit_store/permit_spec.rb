@@ -2,9 +2,9 @@ require 'rspec'
 require 'cantango'
 require 'fixtures/models/items'
 
-describe CanTango::PermissionEngine::Permission do
+describe CanTango::PermitStore::Permission do
   before(:all) do
-    @permission = CanTango::PermissionEngine::Permission.new :bloggers
+    @permission = CanTango::PermitStore::Permission.new :bloggers
   end
 
   subject do

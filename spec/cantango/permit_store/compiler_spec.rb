@@ -5,16 +5,16 @@ require 'spec_helper'
 def permission_fixture
   group = 'bloggers'
   rules = Hashie::Mash.new({"can"=>{"read"=>["Article", "Comment"]}, "cannot"=>{"write"=>["Article", "Post"]}})
-  CanTango::PermissionEngine::Parser::Permissions.new.parse(group, rules) do |permission|
+  CanTango::PermitStore::Parser::Permissions.new.parse(group, rules) do |permission|
     return permission
   end
 end
 
-describe CanTango::PermissionEngine::Compiler do
+describe CanTango::PermitStore::Compiler do
   let (:permission) { permission_fixture }
 
   let(:compiler) do 
-    compiler = CanTango::PermissionEngine::Compiler.new
+    compiler = CanTango::PermitStore::Compiler.new
     compiler.compile! permission
   end
 

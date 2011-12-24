@@ -25,11 +25,11 @@ module CanTango::PermitStore::Load
     end
 
     #def statement target_and_conditions
-    #  CanTango::PermissionEngine::Statement.new method, action, target_and_conditions 
+    #  CanTango::PermitStore::Statement.new method, action, target_and_conditions 
     #end
 
     def parser target
-      CanTango::PermissionEngine::Parser.create_for method, action, target
+      CanTango::PermitStore::Parser.create_for method, action, target
     end
   end
 end

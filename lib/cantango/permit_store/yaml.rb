@@ -87,7 +87,7 @@ module CanTango
       end
 
       def loader
-        @loader ||= CanTango::PermissionEngine::Loader::Permissions.new file_path
+        @loader ||= CanTango::PermitStore::Loader::Permissions.new file_path
       end
 
       def file_path

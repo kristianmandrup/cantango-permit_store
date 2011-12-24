@@ -1,7 +1,7 @@
 require 'rspec'
 require 'cantango'
 
-describe CanTango::PermissionEngine::Parser do
+describe CanTango::PermitStore::Parser do
   context 'simple targets without categories' do
     let (:parser) do
       CanTango::Permission::Parser.new
@@ -24,7 +24,7 @@ describe CanTango::PermissionEngine::Parser do
     end
 
     let (:parser) do
-      CanTango::PermissionEngine::Parser.new categories
+      CanTango::PermitStore::Parser.new categories
     end
 
     let :targets do

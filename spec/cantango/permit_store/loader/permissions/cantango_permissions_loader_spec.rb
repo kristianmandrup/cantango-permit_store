@@ -8,7 +8,7 @@ describe 'Load Permissions file' do
     File.join(config_folder, 'cantango_permissions.yml')
   end
 
-  let (:loader) { CanTango::PermissionEngine::Loader::Permissions.new file }
+  let (:loader) { CanTango::PermitStore::Loader::Permissions.new file }
 
   it_behaves_like "Permissions Loader"
 

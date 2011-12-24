@@ -34,7 +34,7 @@ module CanTango
       end
 
       def parser
-        @parser ||= CanTango::PermissionEngine::Parser::Permissions.new
+        @parser ||= CanTango::PermitStore::Parser::Permissions.new
       end
 =begin
       CanTango.config.engine(:permit_store).types.each do |type|

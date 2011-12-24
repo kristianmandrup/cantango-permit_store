@@ -10,13 +10,13 @@ def config_folder
   File.dirname(__FILE__)+ "/../../fixtures/config/"
 end
 
-describe CanTango::PermissionEngine::YamlStore do
+describe CanTango::PermitStore::YamlStore do
   include CanTangoFixtures
   let (:permissions) { tango_permissions }
 
   context 'Loading permissions' do
     let (:store) do
-      @store ||= CanTango::PermissionEngine::YamlStore.new 'permissions', :path => config_folder 
+      @store ||= CanTango::PermitStore::YamlStore.new 'permissions', :path => config_folder 
     end
 
     before(:each) do
@@ -28,7 +28,7 @@ describe CanTango::PermissionEngine::YamlStore do
 
   context 'Caching permissions by types' do
     let (:store) do
-      @store ||= CanTango::PermissionEngine::YamlStore.new 'permissions', :path => config_folder 
+      @store ||= CanTango::PermitStore::YamlStore.new 'permissions', :path => config_folder 
     end
 
     before(:each) do
@@ -65,7 +65,7 @@ describe CanTango::PermissionEngine::YamlStore do
 
   context 'Saving permissions' do
     let (:store) do
-      @store ||= CanTango::PermissionEngine::YamlStore.new :test_permissions, :path => config_folder 
+      @store ||= CanTango::PermitStore::YamlStore.new :test_permissions, :path => config_folder 
     end
 
     before(:each) do
@@ -78,7 +78,7 @@ describe CanTango::PermissionEngine::YamlStore do
 
   context 'Loading permissions and saving them again' do
     let (:store) do
-      @store ||= CanTango::PermissionEngine::YamlStore.new :test_permissions, :path => config_folder 
+      @store ||= CanTango::PermitStore::YamlStore.new :test_permissions, :path => config_folder 
     end
 
     before(:each) do

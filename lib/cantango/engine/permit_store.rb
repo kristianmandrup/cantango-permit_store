@@ -47,7 +47,7 @@ module CanTango
       end
 
       def permission_factory
-        @permission_factory ||= CanTango::PermissionEngine::Factory.new self
+        @permission_factory ||= CanTango::PermitStore::Factory.new self
       end
 
       def changed?

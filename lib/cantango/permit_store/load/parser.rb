@@ -4,7 +4,7 @@ module CanTango::PermitStore::Load
 
     def self.create_for method, action, target
       type = parser_type target
-      parser_name = "CanTango::PermissionEngine::Parser::#{type.to_s.camelize}"
+      parser_name = "CanTango::PermitStore::Parser::#{type.to_s.camelize}"
       parser_class = parser_name.constantize
       parser_class.new method, action, target
     end

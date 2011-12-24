@@ -1,9 +1,9 @@
 module CanTango
   module PermitStore
     module Load
-      autoload_modules :Collector, :Compiler, :Evaluator, :Selector
-      autoload_modules :Factory, :Parser, :Permit
-      autoload_modules :Statements, :Statement
+      sweetload :Collector, :Compiler, :Evaluator, :Selector
+      sweetload :Factory, :Parser, :Permit
+      sweetload :Statements, :Statement
     end
   end
 end

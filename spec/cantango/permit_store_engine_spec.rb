@@ -21,7 +21,7 @@ CanTango.configure do |config|
   config.debug!
 end
 
-describe CanTango::PermissionEngine do
+describe CanTango::PermitStore do
   context 'no-cache' do
     let (:ability) do
       CanTango::Ability.new @user
@@ -31,7 +31,7 @@ describe CanTango::PermissionEngine do
       @user = User.new 'kris'
     end
 
-    subject { CanTango::PermissionEngine.new ability }
+    subject { CanTango::PermitStore.new ability }
 
     specify { CanTango.config.ability.modes.should include(:no_cache) }
     specify { subject.cached?.should be_false }

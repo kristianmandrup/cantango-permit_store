@@ -23,7 +23,7 @@ module CanTango::PermitStore::Load
       end
 
       def load_categories
-        @categories = CanTango::PermissionEngine::Loader::Categories.new.categories
+        @categories = CanTango::PermitStore::Loader::Categories.new.categories
       end
     end
   end
