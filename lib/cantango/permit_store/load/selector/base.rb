@@ -1,5 +1,5 @@
-module CanTango
-  class PermissionEngine < Engine
+module CanTango::PermitStore::Load
+  module Selector
     module Selector
       class Base
         attr_reader :subject
@@ -15,5 +15,3 @@ module CanTango
     end
   end
 end
-
-

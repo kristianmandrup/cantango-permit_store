@@ -36,13 +36,9 @@ The stores included are:
 
 ## Install
 
-### In current environment (or gemset)
-
 `gem install permit_store`
 
-### In application
-
-Insert into Gemfile
+Or insert into Gemfile
 
 `gem 'permit_store'`
 

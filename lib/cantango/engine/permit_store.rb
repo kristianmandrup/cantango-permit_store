@@ -1,7 +1,7 @@
 module CanTango
   module Engine
     class PermitStore < Base
-      include CanTango::Ability::Executor
+      # include CanTango::Ability::Executor
       include CanTango::Ability::Helper::Role
       include CanTango::Ability::Helper::User
 

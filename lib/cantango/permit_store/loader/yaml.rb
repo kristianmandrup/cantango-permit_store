@@ -1,6 +1,6 @@
 module CanTango
   class YamlPermitStore
-    class Loader < ::CanTango::YamlLoader
+    class Loader < ::CanTango::Loader::Yaml
       attr_accessor :permissions
 
       def initialize file_name

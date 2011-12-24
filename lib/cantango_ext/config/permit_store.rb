@@ -1,7 +1,7 @@
 module CanTango
-  class Configuration
-    class PermitStore
-      include CanTango::Configuration::Factory
+  module Config
+    class PermitStore < Engine
+      include CanTango::Config::Factory
 
       def type_options
         {:type => default_type}

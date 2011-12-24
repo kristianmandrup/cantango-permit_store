@@ -1,23 +1,17 @@
-module CanTango
-  class PermissionEngine < Engine
-    module Selector
-      class UserTypes < Base
-        attr_reader :user_type
+module CanTango::PermitStore::Load
+  module Selector
+    class UserTypes < Base
+      attr_reader :user_type
 
-        def initialize subject
-          @user_type = subject.user.class.to_s.underscore
-        end
+      def initialize subject
+        @user_type = subject.user.class.to_s.underscore
+      end
 
-        protected
+      protected
 
-        def relevant? user_type
-          self.user_type == user_type
-        end
+      def relevant? user_type
+        self.user_type == user_type
       end
     end
   end
 end
-
-
-
-
