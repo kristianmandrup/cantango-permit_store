@@ -4,6 +4,8 @@ module CanTango::PermitStore::Execute
 
     attr_reader :ability, :permits, :type
 
+    delegate :user, :user_key_field, :account :to => :ability
+
     def initialize ability, permits, type
       debug "Collecting #{type} permits"
       @ability = ability
@@ -12,9 +14,9 @@ module CanTango::PermitStore::Execute
     end
 
     def build
-      relevant_rules.inject([]){|evaluators, (name, rules)|
-        evaluators << CanTango::PermitStore::Execute::Evaluator.new(ability, rules) 
-      }
+      relevant_rules.inject([]) do |evaluators, (name, rules)|
+        evaluators << ns::Evaluator.new(ability, rules) 
+      end
     end
 
     def relevant_rules
@@ -22,20 +24,11 @@ module CanTango::PermitStore::Execute
     end
 
     def selector
-      CanTango::PermitStore::Selector.create type, self
+      ns::Selector.create type, self
     end
-
-    def user
-      ability.user
-    end
-
-    def user_account
-      ability.user_account
-    end
-    alias_method :account, :user_account
-
-    def user_key_field
-      ability.user_key_field
+    
+    def ns
+      CanTango::PermitStore::Execute
     end
   end
 end
