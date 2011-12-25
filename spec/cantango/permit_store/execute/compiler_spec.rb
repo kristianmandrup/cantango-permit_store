@@ -2,6 +2,7 @@ require 'rspec'
 require 'cantango'
 require 'hashie'
 require 'spec_helper'
+
 def permission_fixture
   group = 'bloggers'
   rules = Hashie::Mash.new({"can"=>{"read"=>["Article", "Comment"]}, "cannot"=>{"write"=>["Article", "Post"]}})

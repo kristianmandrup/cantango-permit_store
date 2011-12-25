@@ -1,5 +1,5 @@
-module CanTango::PermitStore::Load
-  class Factory
+module CanTango::PermitStore
+  class PermitsFactory
     include CanTango::Helpers::Debug
 
     attr_accessor :ability

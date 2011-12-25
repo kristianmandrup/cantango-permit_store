@@ -1,4 +1,4 @@
-module CanTango::PermitStore::Load
+module CanTango::PermitStore
   class Permit
     # rules is a Hashie, a Hash where keys can also be accessed as method calls
     attr_accessor :name

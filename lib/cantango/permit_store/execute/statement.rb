@@ -1,13 +1,13 @@
 module CanTango::PermitStore::Execute
   class Statement
-    attr_reader :method, :action, :conditions
+    attr_reader :method, :actions, :conditions
 
-    def initialize method, action, conditions = {}
-      @method, @action, @conditions = [method, action, conditions]
+    def initialize method, actions, conditions = {}
+      @method, @actions, @conditions = [method, actions, conditions]
     end
 
     def to_code
-      line = conditions.empty? ? "#{method}(:#{action})" : "#{method}(:#{action}, #{conditions})"
+      line = conditions.empty? ? "#{method}(:#{actions})" : "#{method}(:#{actions}, #{conditions})"
     end
   end
 end

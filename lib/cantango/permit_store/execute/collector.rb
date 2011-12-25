@@ -1,4 +1,4 @@
-module CanTango::PermitStore::Load
+module CanTango::PermitStore::Execute
   class Collector
     include CanTango::Helpers::Debug
 
