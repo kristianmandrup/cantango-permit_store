@@ -20,19 +20,26 @@
 ## Permit Store API
 
 ````ruby
-class CanTango::PermitStore
+class CanTango::PermitStore::Base
   def load!
   end
 
-  def save! permissions
+  def save! permits
   end
 end
 ```
 
 The stores included are:
 
-* `YamlPermitStore`
-* `MonetaPermitStore`
+* `CanTango::PermitStore::Yaml`
+* `CanTango::PermitStore::Moneta`
+
+## Permit Store Design
+
+The Permit Store loads all the stored permits into a hash, grouped by permit type.
+Each permit type is parsed using a `CanTango::PermitStore::Parser::Permits`. 
+This parser creates a permit for each entry in the hash using `#parse(key, obj, &blk)`
+If the key in the hash indicates a registered mode, then the rules are wrapped in mode specific rules method in the permit. Otherwise they are wrapped in the default `#calc_rules` method.
 
 ## Install
 

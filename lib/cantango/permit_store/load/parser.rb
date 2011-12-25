@@ -1,15 +1,20 @@
 module CanTango::PermitStore::Load
   module Parser
-    sweetload :Permissions, :Rule, :Category, :Default, :Ownership, :Relationship, :Regex
+    sweetload :Permits, :Permit, :PermitMode, :Rule
 
     def self.create_for method, action, target
-      type = parser_type target
-      parser_name = "CanTango::PermitStore::Parser::#{type.to_s.camelize}"
-      parser_class = parser_name.constantize
-      parser_class.new method, action, target
+      parser_class(target).new method, action, target
     end
 
     protected
+
+    def self.parser_class target
+      parser_name(target).constantize
+    end
+
+    def self.parser_name target      
+      "CanTango::PermitStore::Parser::#{parser_type(target).to_s.camelize}"
+    end
 
     def self.parser_type target
       case target.to_s

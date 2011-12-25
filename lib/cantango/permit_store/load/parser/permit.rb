@@ -14,14 +14,18 @@ module CanTango::PermitStore::Load::Parser
     def parse &blk
       # Forget keys because I don't know what to do with them
       rules.each do |type, rule|
-        rule_type_error!(type) unless valid_rule_type?(type) || valid_mode?(type)
+        rule_type_error!(type) unless valid_rule_type?(type) || valid_mode?(type) 
         valid_mode?(type) ? parse_mode(type, rule, &blk) : add_rule(type, rule)
       end
     end
 
     def parse_mode mode, rules, &blk
-      self.new(permit.mode(mode), rules).parse &blk
+      mode_parser.new(mode, rules).parse &blk
     end
+
+    def mode_parser mode, rules
+      CanTango::PermitStore::Load::Parser::PermitMode.new mode, rules
+    end 
 
     def add_rule type, rule
       permit.static_rules.send :"#{type}=", rule

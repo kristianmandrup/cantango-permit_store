@@ -1,18 +1,23 @@
 module CanTango::PermitStore::Load
   class Permit
     # rules is a Hashie, a Hash where keys can also be accessed as method calls
-    attr_accessor :name, :static_rules, :compiled_rules
+    attr_accessor :name
 
     def initialize name
       @name = name
     end
 
-    def static_rules
-      @static_rules ||= Hashie::Mash.new
+    def mode
+      @mode ||= :no_cache
     end
 
-    def compiled_rules
-      @compiled_rules ||= Hashie::Mash.new
+    def for_mode mode
+      @mode = mode
+      modes[mode]
+    end
+
+    def modes
+      @modes ||= Hashie::Mash.new
     end
 
     def key
@@ -20,25 +25,7 @@ module CanTango::PermitStore::Load
     end
 
     def to_hash
-      {key => static_rules.to_hash}
-    end
-
-    def to_compiled_hash
-      {key => compiled_rules}
-    end
-
-    def compiled_rules
-      compile_rules!
-      @compiled_rules
-    end
-
-    def compile_rules!
-      compiler.compile! self
-      @compiled_rules = compiler.to_hashie
-    end
-
-    def compiler
-      @compiler ||= CanTango::PermitStore::Compiler.new
+      {key => modes.to_hash}
     end
   end
 end
