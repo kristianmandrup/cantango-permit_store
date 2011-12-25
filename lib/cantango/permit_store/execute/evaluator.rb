@@ -14,8 +14,13 @@ module CanTango::PermitStore::Execute
 
     def evaluate!
       debug "Evaluating statement:"
-      instance_eval statement.to_code
+      instance_eval code if code?
       self
     end
+    
+    def code
+      @code ||= statement.to_code
+    end
+    alias_method :code?, :code
   end
 end

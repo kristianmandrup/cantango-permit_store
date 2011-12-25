@@ -3,7 +3,8 @@ module CanTango::PermitStore::Execute::Statement
     attr_accessor :method, :actions, :conditions
 
     def initialize method, actions, conditions = {}
-      @method, @actions, @conditions = [method, actions, conditions]
+      @method, @actions, @conditions = [method, conditions]
+      @actions = [actions].flatten
     end
 
     def to_code
@@ -11,11 +12,11 @@ module CanTango::PermitStore::Execute::Statement
     end
     
     def simple_statement
-      "#{method}(:#{actions})"
+      "#{method}(#{actions.inspect})"
     end
 
     def full_statement
-      "#{method}(:#{actions}, #{conditions})"
+      "#{method}(#{actions.inspect}, #{conditions})"
     end
   end
 end

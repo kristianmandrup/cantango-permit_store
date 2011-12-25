@@ -5,15 +5,15 @@ describe CanTango::PermitStore::Execute::Evaluator do
   before do
     @user = User.new 'kris'
     @ability = CanTango::Ability::Base.new @user
-    @rule = Hashie::Mash.new 'can' => { 'read' => ['Article', 'Comment'] }
-    @evaluator = CanTango::PermitStore::Execute::Evaluator.new @ability, @rule
+    @statement = CanTango::PermitStore::Execute::Statement::Single.new :can, [:edit], [:Project]
+    @evaluator = CanTango::PermitStore::Execute::Evaluator.new @ability, @statement
   end
 
   subject { @evaluator }
   
   describe 'init' do  
-    its(:ability)     { should == @ability }
-    its(:rule)        { should == @rule }
+    its(:ability)       { should == @ability }
+    its(:statement)     { should == @statement }
   end
   
   describe '#evaluate!' do
