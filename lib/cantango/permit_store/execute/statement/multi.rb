@@ -1,5 +1,5 @@
-module CanTango::PermitStore::Execute
-  class Statements
+module CanTango::PermitStore::Execute::Statement
+  class Multi
     attr_reader :method, :actions
 
     def initialize method, actions, targets

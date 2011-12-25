@@ -5,7 +5,7 @@ describe CanTango::PermitStore::Execute::Evaluator do
   before do
     @user = User.new 'kris'
     @ability = CanTango::Ability::Base.new @user
-    @rule = Hashie::Mash.new :can => 'can(:edit, Project)'
+    @rule = Hashie::Mash.new 'can' => { 'read' => ['Article', 'Comment'] }
     @evaluator = CanTango::PermitStore::Execute::Evaluator.new @ability, @rule
   end
 

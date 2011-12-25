@@ -49,25 +49,13 @@ module CanTango::PermitStore::Execute
 
     def statements method
       check_actions method
-      valid_actions.map do |action|
-        statements_string(method, :action => action)
+      valid_actions.map do |actions|
+        statements_factory(method, actions).statements_string
       end.compact.join("\n")
     end
 
-    # returns the targets the permission rule can manage
-    # Example: permission.can[:manage]
-    # returns ['Article', 'Comment']
-    def get_targets method, action
-      permit.static_rules.send(method).send(:[], action.to_s)
-    end
-
-    # TODO can and cannot should allow for multiple actions!
-    # TODO: should be refactored to more like can([:read, :write], [Article, Comment])
-    # Example: can(:manage, [Article, Comment])
-    def statements_string method, options = {}
-     action = options[:action]
-     targets = get_targets method, action
-     targets ? CanTango::Engine::Permission::Statements.new(method, action, targets).to_code : nil
+    def statements_factory
+      CanTango::PermitStore::Execute::Statement::Factory.new permit, method, actions
     end
 
     def valid_actions

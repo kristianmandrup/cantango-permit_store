@@ -1,4 +1,4 @@
-module CanTango::PermitStore::Load
+module CanTango::PermitStore::Permit
   class Rules
     attr_accessor :static_rules, :compiled_rules
 
