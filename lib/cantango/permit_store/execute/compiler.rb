@@ -2,14 +2,10 @@ module CanTango::PermitStore::Execute
   class Compiler
     sweetload :Statements
     
-    attr_reader :permit, :categories
+    attr_reader :rules, :categories
 
-    def initialize
-    end
-
-    def compile! permit
-      @permit = permit
-      self
+    def initialize rules
+      @rules = rules
     end
 
     def to_hashie
