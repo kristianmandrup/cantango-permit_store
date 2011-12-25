@@ -1,4 +1,4 @@
-module CanTango::PermitStore::Load::Parser
+module CanTango::PermitStore::Parser::Rule
   class Ownership < Base
     attr_reader :model_class, :owner
 

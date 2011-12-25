@@ -7,7 +7,11 @@ module CanTango::PermitStore::Execute
     end
 
     def self.selector_class type
-      "CanTango::PermitStore::Selector::#{type.to_s.camelize}".constantize
+      "#{ns}::#{type.to_s.camelize}".constantize
+    end
+    
+    def self.ns
+      "CanTango::PermitStore::Selector"
     end
   end
 end

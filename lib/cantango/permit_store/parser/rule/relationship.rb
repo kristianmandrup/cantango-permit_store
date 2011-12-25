@@ -1,5 +1,5 @@
-module CanTango::PermitStore::Load::Parser
-  class Relationship < Rule
+module CanTango::PermitStore::Parser::Rule
+  class Relationship < Base
     def parse
       match = target[/(\w+)#(\w+)=(.+)/]
       @target = match[$1]

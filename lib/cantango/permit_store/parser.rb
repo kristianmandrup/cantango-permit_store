@@ -13,7 +13,11 @@ module CanTango::PermitStore
     end
 
     def self.parser_name target      
-      "CanTango::PermitStore::Parser::#{parser_type(target).to_s.camelize}"
+      "#{ns}::#{parser_type(target).to_s.camelize}"
+    end
+    
+    def self.ns
+      "CanTango::PermitStore::Parser::Rule"
     end
 
     def self.parser_type target

@@ -9,7 +9,7 @@ SweetLoader.mode = :require
 module CanTango
   module PermitStore
     sweetload :Base, :Yaml, :Moneta
-    sweetload :Execute, :Loader, :PermitsFactory, :Permit
+    sweetload :Execute, :Loader, :PermitsFactory, :Permit, :Parser
   end
 end
 

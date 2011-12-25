@@ -1,4 +1,4 @@
-module CanTango::PermitStore::Load::Parser
+module CanTango::PermitStore::Parser::Rule
   class Regex < Base
     attr_reader :regex
 

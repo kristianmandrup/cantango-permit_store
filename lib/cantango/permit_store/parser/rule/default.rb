@@ -1,4 +1,4 @@
-module CanTango::PermitStore::Load::Parser
+module CanTango::PermitStore::Parser::Rule
   class Default < Base
     def parse
       return default_all if target == 'all'

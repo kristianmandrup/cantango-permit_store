@@ -1,4 +1,4 @@
-module CanTango::PermitStore::Load::Parser
+module CanTango::PermitStore::Parser::Rule
   class Category < Base
    # remove the '@' prefix to get the category name
    # look up the category and get models referenced by said category

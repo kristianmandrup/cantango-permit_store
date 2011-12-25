@@ -1,10 +1,10 @@
 module CanTango::PermitStore::Execute
   class Statements
-    attr_reader :method, :action
+    attr_reader :method, :actions
 
-    def initialize method, action, targets
+    def initialize method, actions, targets
       @method = method
-      @action = action
+      @actions = actions
       @targets = targets
     end
 
@@ -29,7 +29,7 @@ module CanTango::PermitStore::Execute
     #end
 
     def parser target
-      CanTango::PermitStore::Parser.create_for method, action, target
+      CanTango::PermitStore::Parser.create_for method, actions, target
     end
   end
 end
