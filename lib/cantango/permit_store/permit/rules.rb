@@ -8,7 +8,12 @@ module CanTango::PermitStore::Permit
     end
     
     def to_hash
-      {:static_rules => static_rules, :compiled_rules => compiled_rules}
+      { :static_rules => static_rules, :compiled_rules => compiled_rules }
+    end
+    
+    def statements key
+      meth = :"#{key}_rules"
+      send(meth) if respond_to?(meth)
     end
     
     def static_rules

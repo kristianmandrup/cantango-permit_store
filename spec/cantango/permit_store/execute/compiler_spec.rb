@@ -1,6 +1,3 @@
-require 'rspec'
-require 'cantango'
-require 'hashie'
 require 'spec_helper'
 
 def permission_fixture

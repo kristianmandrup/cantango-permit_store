@@ -1,20 +1,16 @@
 module CanTango::PermitStore::Permit
   class Rule
-    attr_accessor :can, :cannot
+    attr_accessor :type
 
     def initialize
     end
 
-    [:can, :cannot].each do |meth|
-      class_eval %{
-        def #{meth}
-          @#{meth} ||= Hashie::Mash.new
-        end
-      }
+    def content
+      @content ||= Hashie::Mash.new
     end
     
     def to_code
-      
+      "#{type}
     end
   end
 end
