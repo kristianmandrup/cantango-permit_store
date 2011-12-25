@@ -2,14 +2,16 @@ module CanTango::PermitStore::Load
   module Parser
     class Permits
 
-      def initialize
+      attr_reader :type_permit, :rules
+
+      def initialize type_permit, rules
+        @type_permit, @rules = [type_permit, rules]
       end
 
-      def parse(key, obj, &blk)
-        permit = create_permit key
-        case obj
+      def parse &blk
+        case type_permit
         when Hash
-          parse_permit(obj, permit, &blk)
+          parser(rules, permit).parse &blk
         else
           raise "Each key must have a YAML hash that defines its permission configuration"
         end
@@ -18,26 +20,13 @@ module CanTango::PermitStore::Load
 
       protected
 
-      def create_permit key
-        CanTango::PermitStore::Load::Permit.new key
+      def parser
+        CanTango::PermitStore::Load::Parser::Permit.new permit, rules 
       end
 
-      # set :can and :cannot on permit with the permit rule
-      def parse_permit(obj, permit, &blk)
-        # Forget keys because I don't know what to do with them
-        obj.each do |key, value|
-          key_error! unless valid_key(key)
-          permit.static_rules.send :"#{key}=", value
-        end
+      def permit
+        CanTango::PermitStore::Load::Permit.new type_permit
       end
-
-      def valid_key? key
-        [:can, :cannot].include?(key.to_sym)
-      end
-      
-      def key_error!
-        raise ArgumentError, "A CanTango permit store .yml file can only have the keys can: and cannot:"
-      end 
     end
   end
 end

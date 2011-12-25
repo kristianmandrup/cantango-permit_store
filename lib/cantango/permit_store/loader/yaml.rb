@@ -15,13 +15,13 @@ module CanTango::PermitStore::Loader
 
     def load_from_hash hash
       return if hash.empty?
-      hash.each do |type, groups|
+      hash.each do |type, type_permits|
         permits[type] ||= {}
 
-        next if groups.nil?
+        next if type_permits.nil?
 
-        groups.each do |group, rules|
-          parser.parse(group, rules) do |permit|
+        type_permits.each do |type_permit, rules|
+          parser(type_permit, rules).parse do |permit|
             permits[type][permit.name] = permit
           end
         end
@@ -32,8 +32,8 @@ module CanTango::PermitStore::Loader
       @permits ||= Hashie::Mash.new
     end
 
-    def parser
-      @parser ||= CanTango::PermitStore::Parser::Permits.new
+    def parser permit, rules
+      @parser ||= CanTango::PermitStore::Parser::Permits.new permit, rules
     end
 =begin
     CanTango.config.engine(:permit_store).types.each do |type|
