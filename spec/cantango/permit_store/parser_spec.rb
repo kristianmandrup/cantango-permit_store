@@ -1,10 +1,10 @@
-require 'rspec'
-require 'cantango'
+require 'spec_helper'
+require 'fixtures/models'
 
 describe CanTango::PermitStore::Parser do
   context 'simple targets without categories' do
     let (:parser) do
-      CanTango::Permission::Parser.new
+      CanTango::PermitStore::Parser.new
     end
 
     let :targets do
@@ -20,7 +20,7 @@ describe CanTango::PermitStore::Parser do
   context 'targets using categories' do
     let (:categories) do
       cats = {:articles => ['Comment', 'Post']}
-      CanTango::Configuration::Categories.new :my_categories, cats
+      CanTango::Config::Categories.new :my_categories, cats
     end
 
     let (:parser) do

@@ -1,4 +1,4 @@
-module CanTango::PermitStore::Load
+module CanTango::PermitStore
   module Parser
     sweetload :Permits, :Permit, :PermitMode, :Rule
 

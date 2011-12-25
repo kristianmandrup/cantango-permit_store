@@ -1,4 +1,4 @@
-module CanTango::PermitStore::Load::Parser
+module CanTango::PermitStore::Parser
   class PermitMode
     attr_reader :mode, :rules
 

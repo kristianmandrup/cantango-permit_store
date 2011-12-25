@@ -1,5 +1,5 @@
-module CanTango::PermitStore::Load
-  class PermitCreator
+module CanTango::PermitStore::Permit
+  class Creator
     # rules is a Hashie, a Hash where keys can also be accessed as method calls
     attr_accessor :permit
 

@@ -1,10 +1,9 @@
-require 'rspec'
-require 'cantango'
-require 'fixtures/models/items'
+require 'spec_helper'
+require 'fixtures/models'
 
 describe CanTango::PermitStore::Permission do
   before(:all) do
-    @permission = CanTango::PermitStore::Permission.new :bloggers
+    @permission = CanTango::PermitStore::Permit.new :bloggers
   end
 
   subject do

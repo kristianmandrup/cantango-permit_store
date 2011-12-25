@@ -1,4 +1,4 @@
-module CanTango::PermitStore::Load::Parser
+module CanTango::PermitStore::Parser
   module Rule
     sweetload :Base, :Category, :Default, :Ownership, :Regex, :Relationship
   end
