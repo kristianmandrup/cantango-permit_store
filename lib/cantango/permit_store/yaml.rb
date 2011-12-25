@@ -78,15 +78,17 @@ module CanTango
 
       def to_yaml
         permit_types.inject({}) do |collection, type|
-          collection.merge(send(:"#{type}_permits_to_hash"))
+          collection.merge(permits_of type)
         end.to_yaml.gsub(/"(@\w+)"/,'\1') # hash.to_yaml leaves quotes on strings prefixed with @
       end
 
+      def permits_of type
+        send(:"#{type}_permits_to_hash")
+      end
+      
       def loader
         @loader ||= CanTango::PermitStore::Loader::Yaml.new file_path
       end
-
-      protected
 
       def permit_types
         CanTango.config.permits.types.registered

@@ -12,24 +12,23 @@ module CanTango::PermitStore::Load
       #   user:
       #     can:    
       #   admin:      
-      def parse &blk
-        case type_permit
-        when Hash
-          parser(rules, permit).parse &blk
-        else
-          raise "Each key must have a YAML hash that defines its permission configuration"
-        end
-        yield permit if blk
+      def parse &block
+        yield permit(&block) if block
       end
 
       protected
 
-      def parser
-        CanTango::PermitStore::Load::Parser::Permit.new permit, rules 
+      def permit &block
+        error! unless type_permit.kind_of?(Hash)
+        parser.parse(&block)
       end
 
-      def permit
-        CanTango::PermitStore::Load::Permit.new type_permit
+      def parser
+        CanTango::PermitStore::Load::Parser::Permit.new rules 
+      end
+      
+      def error!
+        raise "Each key must have a YAML hash that defines its permission configuration"        
       end
     end
   end

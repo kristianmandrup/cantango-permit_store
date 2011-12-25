@@ -1,9 +1,9 @@
 module CanTango::PermitStore::Load::Parser
   class Permit
-    attr_reader :permit, :rules
+    attr_reader :name, :rules
 
-    def initialize permit, rules 
-      @permit, @rules = [permit, rules]
+    def initialize name, rules 
+      @name, @rules = [name, rules]
     end
 
     # set :can and :cannot on permit with the permit rule
@@ -11,36 +11,42 @@ module CanTango::PermitStore::Load::Parser
     #     edit: [Project, Post]
     #   cannot:
     #     publish: Project      
-    def parse &blk
+    def parse &block
       # Forget keys because I don't know what to do with them
       rules.each do |type, rule|
         rule_type_error!(type) unless valid_rule_type?(type) || valid_mode?(type) 
-        valid_mode?(type) ? parse_mode(type, rule, &blk) : add_rule(type, rule)
+        add_permit permit(type, rule, &block)
       end
     end
 
-    def parse_mode mode, rules, &blk
-      mode_parser.new(mode, rules).parse &blk
+    def add_permit permit
+      permit_creator.new(permit).create
     end
 
-    def mode_parser mode, rules
-      CanTango::PermitStore::Load::Parser::PermitMode.new mode, rules
-    end 
+    protected
 
-    def add_rule type, rule
-      permit.static_rules.send :"#{type}=", rule
+    def permit_creator
+      CanTango::PermitStore::Load::PermitCreator
+    end
+
+    def permit type, rules, &blk
+      mode_parser.new(type, rules).parse &blk
     end
 
     def valid_mode? type
       valid_modes.include?(type.to_sym)
     end
 
-    def valid_rule_type? type
-      valid_rule_types.include?(type.to_sym)
+    def mode_parser mode, rules
+      CanTango::PermitStore::Load::Parser::PermitMode.new name, mode, rules
     end
 
     def valid_modes
       CanTango.config.ability.modes.registered
+    end
+
+    def valid_rule_type? type
+      valid_rule_types.include?(type.to_sym)
     end
 
     def valid_rule_types

@@ -1,30 +1,27 @@
-module CanTango::PermitStore::Load
-  module Parser
-    class Regex < Rule
-      attr_reader :regex
+module CanTango::PermitStore::Load::Parser
+  class Regex < Base
+    attr_reader :regex
 
-      def parse
-        target.gsub!(/\/(.*)\//, '\1')
-        @regex = /#{target}/
-        build_statement
-      end
+    def parse
+      target.gsub!(/\/(.*)\//, '\1')
+      @regex = /#{target}/
+      build_statement
+    end
 
-      private
+    private
 
-      def targets
-        config_models.by_reg_exp(regex)
-      end
+    def targets
+      config_models.by_reg_exp(regex)
+    end
 
-      def build_statement
-        targets.map do |target|
-          "#{method} :#{action}, #{target.name}"
-        end.join("\n")
-      end
+    def build_statement
+      targets.map do |target|
+        "#{method} :#{action}, #{target.name}"
+      end.join("\n")
+    end
 
-      def config_models
-        CanTango.config.models
-      end
-
+    def config_models
+      CanTango.config.models
     end
   end
 end

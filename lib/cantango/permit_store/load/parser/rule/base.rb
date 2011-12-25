@@ -10,6 +10,7 @@ module CanTango::PermitStore::Load
       end
 
       def parse
+        raise NotImplementedError
       end
 
       def parse_class target = nil

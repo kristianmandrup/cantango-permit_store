@@ -1,17 +1,17 @@
-module CanTango::PermitStore::Load
+module CanTango::PermitStore::Execute
   class Compiler
-    attr_reader :permission, :categories
+    attr_reader :permit, :categories
 
     def initialize
     end
 
-    def compile! permission
-      @permission = permission
+    def compile! permit
+      @permit = permit
       self
     end
 
     def to_hashie
-      Hashie::Mash.new(eval_statements)
+      Hashie::Mash.new eval_statements
     end
 
     def eval_statements
@@ -30,15 +30,21 @@ module CanTango::PermitStore::Load
 
     # build the 'can' or 'cannot' statements to evaluate
     def build_statements method, &block
-      return nil if !permission.static_rules.send(method)
+      return nil if !permit.static_rules.send(method)
       yield statements(method) if !statements(method).empty? && block
       statements(method)
     end
-
-    # TODO: make cleaner!
+    
     def check_actions method
-      permission_actions = permission.static_rules.send(method).keys.to_symbols
-      raise "valid actions are: #{valid_actions}" if (permission_actions - valid_actions).size > 0
+      raise "valid actions are: #{valid_actions}" if invalid_actions?(permit_actions_for method)
+    end
+
+    def permit_actions_for method
+      permit.static_rules.send(method).keys.to_symbols
+    end
+
+    def invalid_actions? permit_actions
+      (permit_actions - valid_actions).size > 0
     end
 
     def statements method
@@ -52,7 +58,7 @@ module CanTango::PermitStore::Load
     # Example: permission.can[:manage]
     # returns ['Article', 'Comment']
     def get_targets method, action
-      permission.static_rules.send(method).send(:[], action.to_s)
+      permit.static_rules.send(method).send(:[], action.to_s)
     end
 
     # TODO can and cannot should allow for multiple actions!

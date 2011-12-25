@@ -2,7 +2,6 @@ module CanTango
   module Engine
     class PermitStore < Base
       # include CanTango::Ability::Executor
-      include CanTango::Ability::Helper::Role
       include CanTango::Ability::Helper::User
 
       def initialize ability
@@ -10,23 +9,22 @@ module CanTango
       end
 
       def permit_rules
-        permissions.each do |permission|
-          permission.evaluate! user
+        permits.each do |permit|
+          permits.evaluate! user
         end
       end
 
       def engine_name
-        :permission
+        :permit_store
       end
 
       def valid?
-        puts "valid_mode? #{valid_mode?} #{modes} #{cached?}"
         return false if !valid_mode?
-        permissions.empty? ? invalid : true
+        permits.empty? ? invalid : true
       end
 
       def permissions
-        permission_factory.build!
+        permit_factory.build!
       end
 
       protected
@@ -38,20 +36,20 @@ module CanTango
       end
 
       def end_execute
-        debug "Done Permission Engine"
+        debug "Done PermitStore Engine"
       end
 
       def invalid
-        debug "No permissions found!"
+        debug "No permits found!"
         false
       end
 
-      def permission_factory
-        @permission_factory ||= CanTango::PermitStore::Factory.new self
+      def permit_factory
+        @permit_factory ||= CanTango::PermitStore::Factory.new self
       end
 
       def changed?
-        permission_factory.store.changed?
+        permit_factory.store.changed?
       end
     end
   end

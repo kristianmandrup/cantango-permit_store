@@ -1,4 +1,4 @@
-module CanTango::PermitStore::Load
+module CanTango::PermitStore::Execute
   class Evaluator
     include CanTango::Helpers::Debug
 

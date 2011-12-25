@@ -2,12 +2,12 @@ module CanTango::PermitStore::Load
   class Collector
     include CanTango::Helpers::Debug
 
-    attr_reader :ability, :permissions, :type
+    attr_reader :ability, :permits, :type
 
-    def initialize ability, permissions, type
-      debug "Collecting #{type} permissions"
+    def initialize ability, permits, type
+      debug "Collecting #{type} permits"
       @ability = ability
-      @permissions = permissions
+      @permits = permits
       @type = type
     end
 
@@ -18,19 +18,11 @@ module CanTango::PermitStore::Load
     end
 
     def relevant_rules
-      selector.select permissions
+      selector.select permits
     end
 
     def selector
       CanTango::PermitStore::Selector.create type, self
-    end
-
-    def role_groups_list
-      ability.role_groups
-    end
-
-    def roles_list
-      ability.roles
     end
 
     def user

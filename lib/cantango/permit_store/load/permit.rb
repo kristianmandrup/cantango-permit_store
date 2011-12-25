@@ -13,7 +13,11 @@ module CanTango::PermitStore::Load
 
     def for_mode mode
       @mode = mode
-      modes[mode]
+      modes[mode] = rules
+    end
+
+    def rules
+      CanTango::PermitStore::Load::Rules.new
     end
 
     def modes

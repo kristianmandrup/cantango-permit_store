@@ -2,8 +2,11 @@ module CanTango::PermitStore::Load
   class Rules
     attr_accessor :static_rules, :compiled_rules
 
-    def initialize rules
-      @static_rules = rules
+    def initialize
+    end
+    
+    def to_hash
+      {:static_rules => static_rules, :compiled_rules => compiled_rules}
     end
     
     def static_rules

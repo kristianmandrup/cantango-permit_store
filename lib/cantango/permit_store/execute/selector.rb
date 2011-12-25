@@ -1,4 +1,4 @@
-module CanTango::PermitStore::Load
+module CanTango::PermitStore::Execute
   module Selector
     sweetload :Base, :Licenses, :Users
 
