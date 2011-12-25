@@ -5,8 +5,14 @@ module CanTango::PermitStore::Load
 
     def initialize name
       @name = name
-      @static_rules = Hashie::Mash.new
-      @compiled_rules = Hashie::Mash.new
+    end
+
+    def static_rules
+      @static_rules ||= Hashie::Mash.new
+    end
+
+    def compiled_rules
+      @compiled_rules ||= Hashie::Mash.new
     end
 
     def key

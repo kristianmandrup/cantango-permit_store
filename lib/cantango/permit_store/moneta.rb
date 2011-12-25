@@ -24,8 +24,13 @@ module CanTango
         store.load! name
       end
 
-      def store permissions
-        store.save! name, permissions.map {|p| p.to_a }
+      def save! permits
+        super
+        store.save!(name, map(permits)) if permits
+      end
+      
+      def map permits
+        permits.map {|p| p.to_a }
       end
     end
   end
