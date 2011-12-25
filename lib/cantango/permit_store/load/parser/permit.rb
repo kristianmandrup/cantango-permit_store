@@ -7,28 +7,48 @@ module CanTango::PermitStore::Load::Parser
     end
 
     # set :can and :cannot on permit with the permit rule
+    #   can:
+    #     edit: [Project, Post]
+    #   cannot:
+    #     publish: Project      
     def parse &blk
       # Forget keys because I don't know what to do with them
       rules.each do |type, rule|
-        rule_error!(type) unless valid_rule?(type)
-        permit.static_rules.send :"#{type}=", rule
+        rule_type_error!(type) unless valid_rule_type?(type) || valid_mode?(type)
+        valid_mode?(type) ? parse_mode(type, rule, &blk) : add_rule(type, rule)
       end
     end
 
-    def valid_rule? type
+    def parse_mode mode, rules, &blk
+      self.new(permit.mode(mode), rules).parse &blk
+    end
+
+    def add_rule type, rule
+      permit.static_rules.send :"#{type}=", rule
+    end
+
+    def valid_mode? type
+      valid_modes.include?(type.to_sym)
+    end
+
+    def valid_rule_type? type
       valid_rule_types.include?(type.to_sym)
+    end
+
+    def valid_modes
+      CanTango.config.ability.modes.registered
     end
 
     def valid_rule_types
       [:can, :cannot]
     end
       
-    def rule_error! type
+    def rule_type_error! type
       raise ArgumentError, error_msg(type)
     end
     
     def error_msg(type)
-      "CanTango permit store valid rule keys #{valid_rule_types}, was: #{type}"
+      "CanTango permit store valid rule keys: #{valid_rule_types} or mode: #{valid_modes}, was: #{type}"
     end
   end
 end

@@ -8,6 +8,10 @@ module CanTango::PermitStore::Load
         @type_permit, @rules = [type_permit, rules]
       end
 
+      # user_type:
+      #   user:
+      #     can:    
+      #   admin:      
       def parse &blk
         case type_permit
         when Hash
