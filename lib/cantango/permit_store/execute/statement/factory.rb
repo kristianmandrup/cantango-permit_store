@@ -1,13 +1,13 @@
 module CanTango::PermitStore::Execute::Statement
   class Factory
-    attr_accessor :permit, :method, :actions
+    attr_accessor :rules, :method, :actions
     
-    def initialize permit, method, actions
-      @permit, @method, @actions = [permit, method, actions]
+    def initialize rules, method, actions
+      @rules, @method, @actions = [rules, method, actions]
     end
     
     def targets
-      permit.static_rules.send(method).send(:[], action.to_s)
+      rules.static.send(method).send(:[], action.to_s)
     end
     
     # Example: can([:edit, :manage], [Article, Comment])

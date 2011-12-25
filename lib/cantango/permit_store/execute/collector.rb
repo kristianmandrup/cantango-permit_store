@@ -13,7 +13,7 @@ module CanTango::PermitStore::Execute
 
     def build
       relevant_rules.inject([]){|evaluators, (name, rules)|
-        evaluators << CanTango::PermitStore::Evaluator.new(ability, rules) 
+        evaluators << CanTango::PermitStore::Execute::Evaluator.new(ability, rules) 
       }
     end
 

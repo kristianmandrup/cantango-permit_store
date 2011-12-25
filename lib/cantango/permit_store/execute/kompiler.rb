@@ -1,6 +1,6 @@
 module CanTango::PermitStore::Execute
-  class Compiler
-    sweetload :Statements
+  class Kompiler
+    sweetload :Statements, :StatementsBuilder
     
     attr_reader :rules, :categories
 
@@ -26,6 +26,6 @@ module CanTango::PermitStore::Execute
 
     protected
 
-    include CanTango::PermitStore::Execute::Compiler::Statements
+    include CanTango::PermitStore::Execute::Kompiler::Statements
   end
 end

@@ -1,25 +1,25 @@
 require 'spec_helper'
 
-def permission_fixture
+def permit_fixture
   group = 'bloggers'
   rules = Hashie::Mash.new({"can"=>{"read"=>["Article", "Comment"]}, "cannot"=>{"write"=>["Article", "Post"]}})
-  CanTango::PermitStore::Parser::Permissions.new.parse(group, rules) do |permission|
-    return permission
+  CanTango::PermitStore::Parser::Permissions.new.parse(group, rules) do |permit|
+    return permit
   end
 end
 
-describe CanTango::PermitStore::Compiler do
-  let (:permission) { permission_fixture }
+describe CanTango::PermitStore::Execute::Compiler do
+  let (:permit) { permit_fixture }
 
   let(:compiler) do 
-    compiler = CanTango::PermitStore::Compiler.new
-    compiler.compile! permission
+    compiler = CanTango::PermitStore::Execute::Compiler.new
+    compiler.compile! permit
   end
 
   it 'should raise if permission contains not-valid actions' do
     expect {compiler.can_eval}.not_to raise_error
     # Replacing static_rules with rule that has not-valid action:
-    permission.static_rules.can = Hashie::Mash.new({'edit' => ["Article"]})
+    permit.static_rules.can = Hashie::Mash.new({'edit' => ["Article"]})
     expect {compiler.can_eval}.to raise_error
   end
 
@@ -34,5 +34,4 @@ describe CanTango::PermitStore::Compiler do
       statements.should == %|cannot(:write, Article)\ncannot(:write, Post)|
     end
   end
-
 end

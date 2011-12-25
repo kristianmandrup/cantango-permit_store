@@ -30,6 +30,8 @@ module CanTango::PermitStore::Permit
       end      
     end
     
+    protected
+    
     def class_name
       "CanTango::Permit::#{type.to_s.camelize}::#{name.to_s.camelize}"
     end

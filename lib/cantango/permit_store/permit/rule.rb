@@ -10,7 +10,7 @@ module CanTango::PermitStore::Permit
     end
     
     def to_code
-      "#{type}
+      raise NotImplementedError
     end
   end
 end

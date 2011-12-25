@@ -1,31 +1,26 @@
 module CanTango::PermitStore::Permit
   class Rules
-    attr_accessor :static_rules, :compiled_rules
+    attr_accessor :static, :compiled
 
     def initialize rules = {}
-      @static_rules   = rules[:static_rules]
-      @compiled_rules = rules[:compiled_rules]
+      @static   = rules[:static]
+      @compiled = rules[:compiled]
     end
     
     def to_hash
-      { :static_rules => static_rules, :compiled_rules => compiled_rules }
+      { :static => static, :compiled => compiled }
+    end
+        
+    def static
+      @static ||= Hashie::Mash.new
     end
     
-    def statements key
-      meth = :"#{key}_rules"
-      send(meth) if respond_to?(meth)
-    end
-    
-    def static_rules
-      @static_rules ||= Hashie::Mash.new
-    end
-    
-    def compiled_rules
-      @compiled_rules ||= compiler.to_hashie
+    def compiled
+      @compiled ||= compiler.to_hashie
     end
 
     def compiler
-      @compiler ||= CanTango::PermitStore::Compiler.new self
+      @compiler ||= CanTango::PermitStore::Execute::Compiler.new self
     end    
   end
 end

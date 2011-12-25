@@ -1,10 +1,14 @@
 require 'spec_helper'
 
-describe CanTango::PermitStore::Compiler:StatementsBuilder do
+describe CanTango::PermitStore::Execute::Compiler:StatementsBuilder do
   before do
-    @rules    = CanTango::PermitStore::Permit::Rules.new 
-    @builder  = CanTango::PermitStore::Compiler:StatementsBuilder.new @rules, method, actions
+    static = ''
+    method = :can
+    actions = [:edit]
+    @rules    = CanTango::PermitStore::Permit::Rules.new :static => static
+    @builder  = CanTango::PermitStore::Execute::Compiler:StatementsBuilder.new @rules, method, actions
   end
+
   describe 'init' do
-    
+  end
 end
