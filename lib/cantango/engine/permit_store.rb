@@ -10,7 +10,7 @@ module CanTango
 
       def permit_rules
         permits.each do |permit|
-          permits.evaluate! user
+          permits.evaluate
         end
       end
 
@@ -23,8 +23,8 @@ module CanTango
         permits.empty? ? invalid : true
       end
 
-      def permissions
-        permit_factory.build!
+      def permits
+        permits_factory.build!
       end
 
       protected
@@ -32,11 +32,11 @@ module CanTango
       alias_method :cache_key, :engine_name
 
       def start_execute
-        debug "Permission Engine executing..."
+        debug "PermitStore Engine executing..."
       end
 
       def end_execute
-        debug "Done PermitStore Engine"
+        debug "Done PermitStore engine"
       end
 
       def invalid
@@ -44,12 +44,12 @@ module CanTango
         false
       end
 
-      def permit_factory
-        @permit_factory ||= CanTango::PermitStore::Factory.new self
+      def permits_factory
+        @permits_factory ||= CanTango::PermitStore::PermitsFactory.new self
       end
 
       def changed?
-        permit_factory.store.changed?
+        permits_factory.store.changed?
       end
     end
   end

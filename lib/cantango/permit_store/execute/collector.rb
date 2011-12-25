@@ -23,6 +23,8 @@ module CanTango::PermitStore::Execute
       selector.select permits
     end
 
+    protected
+
     def selector
       ns::Selector.create type, self
     end
