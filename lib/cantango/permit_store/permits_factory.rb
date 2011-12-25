@@ -12,46 +12,42 @@ module CanTango::PermitStore
     end
 
     def build!
-      debug "building permissions"
-      @evaluators ||= permission_types.inject([]) do |res, type|
+      debug "Building permits"
+      @evaluators ||= types.inject([]) do |res, type|
         res << collector(type).build
         res
       end.flatten.compact
     end
 
     def collector(type)
-      rules = store.send(:"#{type}_rules")
-      CanTango::PermitStore::Collector.new(ability, rules, type)
+      rules = store.send(type)
+      ns::Collector.new(ability, rules, type)
     end
 
-    def options
-      ability.options
-    end
+    delegate :options, :to => :ability
 
     def store
-      store_class.new :permissions, store_options
+      store_class.new :permits, store_options
     end
 
     def store_class
-      permission_engine.store.default_class
+      store.default_class
     end
 
     def store_options
-      permission_engine.store.options.merge(:path => config_path)
+      store.options.merge(:path => config_path)
     end
 
-    def permission_types
-      permission_engine.types
-    end
-
-    def config_path
-      permission_engine.config_path
-    end
+    delegate :types, :config_path, :store, :to => :permit_store
 
     private
 
-    def permission_engine
-      CanTango.config.permission_engine
+    def ns
+      CanTango::PermitStore::Execute
+    end
+
+    def permit_store
+      CanTango.config.engine(:permit_store)
     end
   end
 end

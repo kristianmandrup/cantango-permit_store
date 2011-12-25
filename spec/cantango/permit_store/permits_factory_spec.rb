@@ -12,5 +12,8 @@ describe CanTango::PermitStore::PermitsFactory do
   
   describe 'init' do
     its(:ability) { should == @ability }
-  end 
+  end
+  
+  describe '' do
+  end
 end
