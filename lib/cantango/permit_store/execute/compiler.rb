@@ -1,5 +1,7 @@
 module CanTango::PermitStore::Execute
   class Compiler
+    sweetload :Statements
+    
     attr_reader :permit, :categories
 
     def initialize
@@ -28,38 +30,6 @@ module CanTango::PermitStore::Execute
 
     protected
 
-    # build the 'can' or 'cannot' statements to evaluate
-    def build_statements method, &block
-      return nil if !permit.static_rules.send(method)
-      yield statements(method) if !statements(method).empty? && block
-      statements(method)
-    end
-    
-    def check_actions method
-      raise "valid actions are: #{valid_actions}" if invalid_actions?(permit_actions_for method)
-    end
-
-    def permit_actions_for method
-      permit.static_rules.send(method).keys.to_symbols
-    end
-
-    def invalid_actions? permit_actions
-      (permit_actions - valid_actions).size > 0
-    end
-
-    def statements method
-      check_actions method
-      valid_actions.map do |actions|
-        statements_factory(method, actions).statements_string
-      end.compact.join("\n")
-    end
-
-    def statements_factory
-      CanTango::PermitStore::Execute::Statement::Factory.new permit, method, actions
-    end
-
-    def valid_actions
-      [:manage, :read, :update, :create, :write]
-    end
+    include CanTango::PermitStore::Execute::Compiler::Statements
   end
 end
