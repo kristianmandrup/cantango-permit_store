@@ -4,6 +4,9 @@ module CanTango::PermitStore
 
     attr_accessor :ability
 
+    delegate :options, :to => :ability
+    delegate :types, :config_path, :store, :to => :permit_store
+
     # creates the factory for the ability
     # note that the ability contains the roles and role groups of the user (or account)
     # @param [Permits::Ability] the ability
@@ -13,6 +16,10 @@ module CanTango::PermitStore
 
     def build!
       debug "Building permits"
+      evaluators
+    end
+
+    def evaluators
       @evaluators ||= types.inject([]) do |res, type|
         res << collector(type).build
         res
@@ -23,8 +30,8 @@ module CanTango::PermitStore
       rules = store.send(type)
       ns::Collector.new(ability, rules, type)
     end
-
-    delegate :options, :to => :ability
+    
+    private
 
     def store
       store_class.new :permits, store_options
@@ -37,10 +44,6 @@ module CanTango::PermitStore
     def store_options
       store.options.merge(:path => config_path)
     end
-
-    delegate :types, :config_path, :store, :to => :permit_store
-
-    private
 
     def ns
       CanTango::PermitStore::Execute
