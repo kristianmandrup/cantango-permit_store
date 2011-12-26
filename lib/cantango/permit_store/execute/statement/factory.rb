@@ -1,22 +1,26 @@
 module CanTango::PermitStore::Execute::Statement
   class Factory
-    attr_accessor :rules, :method, :actions
+    attr_accessor :rules
     
-    def initialize rules, method, actions
-      @rules, @method, @actions = [rules, method, actions]
+    def initialize rules
+      @rules = rules
     end
-    
-    def targets
-      rules.static.send(method).send(:[], action.to_s)
+
+    def methods
+      rules.keys
     end
-    
+
+    def actions_for key
+      rules[key].keys
+    end
+
     # Example: can([:edit, :manage], [Article, Comment])
     def statements_string
      targets ? create_statements.to_code : nil
     end
 
     def create_statements
-      CanTango::Engine::Permission::Statements.new method, actions, targets
+      CanTango::Engine::Permission::Statement::Multi.new rules
     end
   end
 end

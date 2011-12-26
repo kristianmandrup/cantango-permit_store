@@ -1,12 +1,13 @@
 module CanTango::PermitStore::Permit
   class Rules
+    # can and cannot rules for a single permit (or permit mode)
     attr_accessor :static, :compiled
 
     def initialize rules = {}
       @static   = rules[:static]
       @compiled = rules[:compiled]
     end
-    
+    # {:can => {:edit => ['Project]}}
     def to_hash
       { :static => static, :compiled => compiled }
     end

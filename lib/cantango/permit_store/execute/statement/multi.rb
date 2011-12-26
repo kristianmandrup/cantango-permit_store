@@ -1,11 +1,9 @@
 module CanTango::PermitStore::Execute::Statement
   class Multi
-    attr_reader :method, :actions
+    attr_reader :rules
 
-    def initialize method, actions, targets
-      @method = method
-      @actions = actions
-      @targets = targets
+    def initialize rules
+      @rules = rules
     end
 
     def to_code
@@ -15,21 +13,22 @@ module CanTango::PermitStore::Execute::Statement
     protected
 
     def parse_statements
-      targets.inject([]) do |statements, target|
-        statements << parser(target).parse
-      end.flatten
+      rules.each do |meth, rule|
+        rule.each do |action, targets|
+          targets.each do |target|
+            statements << parser(meth, action, target).parse
+          end
+        end
+      end
+      statements
     end
 
-    def targets
-      @targets ||= []
+    def statements
+      @statements ||= []
     end
 
-    #def statement target_and_conditions
-    #  CanTango::PermitStore::Statement.new method, action, target_and_conditions 
-    #end
-
-    def parser target
-      CanTango::PermitStore::Parser.create_for method, actions, target
+    def parser meth, action, target
+      CanTango::PermitStore::Parser.create_for meth, action, target
     end
   end
 end
