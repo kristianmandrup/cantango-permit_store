@@ -1,40 +1,32 @@
 module CanTango::PermitStore::Loader
   class Yaml < ::CanTango::Loader::Yaml
-    attr_accessor :permissions
-
     def initialize file_name
       @file_name = file_name
       load!
     end
 
-    def load!
+    def load_yaml
       load_from_hash yml_content
-    rescue => e
-      raise "PermissionsLoader Error: The permissions for the file #{file_name} could not be loaded - cause was #{e}"
     end
 
-    def load_from_hash hash
-      return if hash.empty?
-      hash.each do |type, type_permits|
+    def load_hash permits_hash
+      return if permits_hash.empty?
+      yml_content.each do |type, permits_hash|
         permits[type] ||= {}
+        next if permits_hash.nil?
 
-        next if type_permits.nil?
-
-        type_permits.each do |type_permit, rules|
-          parser(type_permit, rules).parse do |permit|
-            permits[type][permit.name] = permit
-          end
-        end
+        permits_loader(type, permits_hash).load
       end
+    rescue => e
+      raise "PermissionsLoader Error: The permits for the file #{file_name} could not be loaded - cause was #{e}"      
     end
 
-    def permits
-      @permits ||= Hashie::Mash.new
+    protected
+    
+    def permits_loader type, permits_hash
+      CanTango::PermitStore::Loader::Permits.new type, permits_hash
     end
 
-    def parser permit, rules
-      @parser ||= CanTango::PermitStore::Parser::Permits.new permit, rules
-    end
 =begin
     CanTango.config.engine(:permit_store).types.each do |type|
       define_method(:"#{type}_permissions") {

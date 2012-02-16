@@ -5,7 +5,7 @@ module CanTango::PermitStore
     attr_accessor :ability
 
     delegate :options, :to => :ability
-    delegate :types, :config_path, :store, :to => :permit_store
+    delegate :types, :store, :to => :permit_store
 
     # creates the factory for the ability
     # note that the ability contains the roles and role groups of the user (or account)
@@ -27,24 +27,10 @@ module CanTango::PermitStore
     end
 
     def collector(type)
-      rules = store.send(type)
-      ns::Collector.new(ability, rules, type)
+      rules = permit_store.send(type)
+      ns::Collector.new ability, rules, type
     end
     
-    private
-
-    def store
-      store_class.new :permits, store_options
-    end
-
-    def store_class
-      store.default_class
-    end
-
-    def store_options
-      store.options.merge(:path => config_path)
-    end
-
     def ns
       CanTango::PermitStore::Execute
     end
