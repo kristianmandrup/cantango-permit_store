@@ -10,12 +10,16 @@ module CanTango::PermitStore::Loader
       return if hash.empty?
       hash.each do |type, permits_hash|
         next if permits_hash.empty?
-        permits.merge! permits_loader(type, permits_hash).load
+        permits_of(type).merge! permits_loader(type, permits_hash).load
       end
       permits
     end
 
     protected
+
+    def permits_of type
+      permits[type] = {}
+    end
 
     def permits
       @permits ||= Hashie::Mash.new

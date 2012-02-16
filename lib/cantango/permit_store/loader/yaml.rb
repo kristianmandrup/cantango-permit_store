@@ -1,4 +1,7 @@
 module CanTango::PermitStore::Loader
+  # The Yaml loader acts as a wrapper of Hash loader. 
+  # The Yaml loader takes yaml and converts it into a hash 
+  # which is then used to initialize and load the Hash loader
   class Yaml < ::CanTango::Loader::Yaml
     def initialize file_name
       @file_name = file_name

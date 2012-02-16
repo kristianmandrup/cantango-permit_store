@@ -1,23 +1,26 @@
 module CanTango::PermitStore::Parser
   class Permit
-    attr_reader :name, :rules
+    attr_reader :name, :permit_rules
     attr_writer :mode
 
-    def initialize name, rules
-      @name, @rules = [name, rules]
+    def initialize name, permit_rules
+      @name, @permit_rules = [name, permit_rules]
     end
 
-    # set :can and :cannot on permit with the permit rule
+    # Parses for a Hash of the form:
+    # cache:
     #   can:
     #     edit: [Project, Post]
     #   cannot:
     #     publish: Project      
-    def parse mode = nil, &block
-      self.mode = mode if mode
+    # no_cache:
+    #
+    # this parser will delegate to a Permit mode parser
+    
+    def parse &block
       # Forget keys because I don't know what to do with them
-      rules.each do |type, rule|
-        rule_type_error!(type) unless valid_rule_type?(type) || valid_mode?(type) 
-        add_permit parse_permit(&block)
+      permit_rules.each do |type, rule|
+        add_permit parse_permit(type, rule, &block)
       end
     end
 
@@ -25,11 +28,21 @@ module CanTango::PermitStore::Parser
       permit_creator(permit).create
     end
 
-    def mode
-      @mode || :no_cache
-    end 
-
     protected
+
+    def parse_permit type, rule, &block
+      build_mode_parser(type, rule).parse
+    end
+
+    def build_mode_parser type, rule
+      return mode_parser(type, rule) if valid_mode? type
+      return mode_parser(:default, rule) if valid_rule_type? type
+      rule_type_error!(type)
+    end
+
+    def mode_parser mode, rule
+      @mode_parser ||= CanTango::PermitStore::Parser::PermitMode.new mode, rule
+    end
 
     def permit_creator permit
       CanTango::PermitStore::Permit::Creator.new permit
@@ -39,12 +52,12 @@ module CanTango::PermitStore::Parser
       mode_parser.parse &block
     end
 
-    def valid_mode? type
-      valid_modes.include?(type.to_sym)
+    def valid_type? type
+      valid_rule_type?(type) || valid_mode?(type) 
     end
 
-    def mode_parser
-      @mode_parser ||= CanTango::PermitStore::Parser::PermitMode.new name, mode, rules
+    def valid_mode? type
+      valid_modes.include?(type.to_sym)
     end
 
     def valid_modes

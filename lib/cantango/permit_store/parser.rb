@@ -1,6 +1,6 @@
 module CanTango::PermitStore
   module Parser
-    sweetload :Permits, :Permit, :PermitMode, :Rule
+    sweetload :Permit, :PermitMode, :Rule
 
     def self.create_for meth, action, target
       parser_class(target).new method, action, target
