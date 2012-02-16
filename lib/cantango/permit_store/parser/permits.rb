@@ -1,9 +1,9 @@
 module CanTango::PermitStore::Parser
   class Permits
-    attr_reader :rules
+    attr_reader :name, :rules
 
-    def initialize rules
-      @rules = rules
+    def initialize name, rules
+      @name, @rules = [name, rules]
     end
 
     # user_type:
@@ -21,7 +21,7 @@ module CanTango::PermitStore::Parser
     end
 
     def parser
-      CanTango::PermitStore::Parser::Permit.new rules 
+      CanTango::PermitStore::Parser::Permit.new name, rules 
     end      
   end
 end

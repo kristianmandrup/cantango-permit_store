@@ -2,29 +2,18 @@ module CanTango::PermitStore::Loader
   class Yaml < ::CanTango::Loader::Yaml
     def initialize file_name
       @file_name = file_name
-      load!
     end
 
-    def load_yaml
-      load_from_hash yml_content
-    end
-
-    def load_hash permits_hash
-      return if permits_hash.empty?
-      yml_content.each do |type, permits_hash|
-        permits[type] ||= {}
-        next if permits_hash.nil?
-
-        permits_loader(type, permits_hash).load
-      end
+    def load
+      hash_loader.load
     rescue => e
-      raise "PermissionsLoader Error: The permits for the file #{file_name} could not be loaded - cause was #{e}"      
+      raise "PermitStore::Loader::Yaml - The permits could not be loaded. Cause was: #{e}"            
     end
 
     protected
     
-    def permits_loader type, permits_hash
-      CanTango::PermitStore::Loader::Permits.new type, permits_hash
+    def hash_loader
+      @hash_loader ||= CanTango::PermitStore::Loader::Hash.new yml_content
     end
 
 =begin

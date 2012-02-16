@@ -1,6 +1,6 @@
 module CanTango::PermitStore::Parser
   class PermitMode
-    attr_reader :mode, :rules
+    attr_reader :name, :mode, :rules
 
     def initialize name, mode, rules 
       @name, @mode, @rules = [name, mode, rules]
@@ -23,6 +23,8 @@ module CanTango::PermitStore::Parser
       permit
     end
 
+    protected
+
     def add_rule type, rule
       permit_mode.static_rules.send :"#{type}=", rule
     end
@@ -32,7 +34,7 @@ module CanTango::PermitStore::Parser
     end
     
     def permit
-      @permit ||= CanTango::PermitStore::Load::Permit.new name
+      @permit ||= CanTango::PermitStore::Permit.new name
     end
   end
 end

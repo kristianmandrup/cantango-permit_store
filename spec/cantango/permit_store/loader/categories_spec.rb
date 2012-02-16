@@ -1,9 +1,5 @@
 require 'spec_helper'
 
-def config_folder 
-  File.dirname(__FILE__)+ "/../../../fixtures/config/"
-end
-
 describe 'Load Categories rules' do
   let (:file) do
     File.join(config_folder, 'categories.yml')

@@ -4,7 +4,7 @@ module CanTango::PermitStore::Execute
 
     attr_reader :ability, :permits, :type
 
-    delegate :user, :user_key_field, :account :to => :ability
+    delegate :user, :user_key_field, :account, :to => :ability
 
     def initialize ability, permits, type
       debug "Collecting #{type} permits"

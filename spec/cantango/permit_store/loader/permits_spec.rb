@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'shared'
+require 'permit_store/loader/shared_ex'
 
 describe CanTango::PermitStore::Loader::Permits do
   let (:type) { :user }

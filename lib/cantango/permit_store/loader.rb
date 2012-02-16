@@ -1,7 +1,7 @@
 module CanTango
   module PermitStore
     module Loader
-      autoload_modules :Yaml
+      sweetload :Permits, :Hash, :Yaml
     end
   end
 end

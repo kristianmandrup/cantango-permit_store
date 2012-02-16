@@ -1,5 +1,7 @@
 module CanTango::PermitStore
   class Permit
+    sweetload :Creator, :Rules, :Rules
+    
     # rules is a Hashie, a Hash where keys can also be accessed as method calls
     attr_accessor :name
 
@@ -17,7 +19,7 @@ module CanTango::PermitStore
     end
 
     def rules
-      CanTango::PermitStore::Load::Rules.new
+      CanTango::PermitStore::Permit::Rules.new
     end
 
     def modes

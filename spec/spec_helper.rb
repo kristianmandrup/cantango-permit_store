@@ -14,6 +14,10 @@ def fixtures_path
   File.join("#{File.dirname(__FILE__)}", "fixtures")
 end
 
+def config_folder 
+  File.join(fixtures_path, 'config')
+end 
+
 def config_path
   File.join(fixtures_path, 'config')
 end
