@@ -18,8 +18,13 @@ module CanTango::PermitStore
       modes[mode] = rules
     end
 
+    def add_rule rule
+      rules << rule
+    end
+
+
     def rules
-      CanTango::PermitStore::Permit::Rules.new
+      @rules ||= CanTango::PermitStore::Permit::Rules.new
     end
 
     def modes

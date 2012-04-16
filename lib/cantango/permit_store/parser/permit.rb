@@ -19,8 +19,8 @@ module CanTango::PermitStore::Parser
     
     def parse &block
       # Forget keys because I don't know what to do with them
-      permit_rules.each do |type, rule|
-        add_permit parse_permit(type, rule, &block)
+      permit_rules.each do |type, rules|
+        add_permit parse_permit(type, rules, &block)
       end
     end
 
@@ -30,26 +30,22 @@ module CanTango::PermitStore::Parser
 
     protected
 
-    def parse_permit type, rule, &block
-      build_mode_parser(type, rule).parse
+    def parse_permit type, rules, &block
+      build_mode_parser(type, rules).parse
     end
 
-    def build_mode_parser type, rule
-      return mode_parser(type, rule) if valid_mode? type
-      return mode_parser(:default, rule) if valid_rule_type? type
+    def build_mode_parser type, rules
+      return mode_parser(type, rules) if valid_mode? type
+      return mode_parser(:default, rules) if valid_rule_type? type
       rule_type_error!(type)
     end
 
-    def mode_parser mode, rule
-      @mode_parser ||= CanTango::PermitStore::Parser::PermitMode.new mode, rule
+    def mode_parser mode, rules
+      @mode_parser ||= CanTango::PermitStore::Parser::PermitMode.new name, mode, rules
     end
 
     def permit_creator permit
       CanTango::PermitStore::Permit::Creator.new permit
-    end
-
-    def parse_permit &block
-      mode_parser.parse &block
     end
 
     def valid_type? type

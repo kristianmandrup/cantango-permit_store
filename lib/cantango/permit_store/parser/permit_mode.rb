@@ -26,7 +26,7 @@ module CanTango::PermitStore::Parser
     protected
 
     def add_rule type, rule
-      permit_mode.static_rules.send :"#{type}=", rule
+      permit.add_rule rule
     end
 
     def permit_mode

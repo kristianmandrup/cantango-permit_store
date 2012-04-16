@@ -8,6 +8,12 @@ module CanTango::PermitStore
         @static   = rules[:static]
         @compiled = rules[:compiled]
       end
+
+      def << rule
+        puts "add static rule: #{rule}"
+        static.merge(rule)
+      end
+
       # {:can => {:edit => ['Project]}}
       def to_hash
         { :static => static, :compiled => compiled }
