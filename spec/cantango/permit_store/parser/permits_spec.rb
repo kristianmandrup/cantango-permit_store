@@ -10,9 +10,11 @@ describe CanTango::PermitStore::Parser::Permits do
     @permits
   end
   
-  it 'should parse' do
-    @permits.parse do
-      # block
+  describe '#parse' do
+    it 'should parse block' do
+      @permits.parse do
+        # block
+      end
     end
   end
 end
